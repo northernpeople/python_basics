@@ -55,9 +55,67 @@ def insertion_sort(ray):
     return ray
 
 
+def print_array_recursively(word):
+    if len(word) == 0:
+        return
+    print word[0],
+    print_array_recursively(word[1:])
+
+
+def merge(r1, r2):
+    r3 = []
+    r1_index = 0
+    r2_index = 0
+    # pick smallest number from both arrays
+    while r1_index < len(r1) and r2_index < len(r2):
+        if r1[r1_index] <= r2[r2_index]:
+            r3.append(r1[r1_index])
+            r1_index += 1
+        else:
+            r3.append(r2[r2_index])
+            r2_index += 1
+    # pick what is left from either array
+    while r1_index < len(r1):
+        r3.append(r1[r1_index])
+        r1_index += 1
+
+    while r2_index < len(r2):
+        r3.append(r2[r2_index])
+        r2_index += 1
+    # print "merged", r3
+    return r3
+
+
+# worst case n log n, best case n log n, so big theta (n log n)
+def merge_sort(ray):
+    if len(ray) < 2:
+        return ray
+    else:
+        middle = len(ray) // 2
+        return merge(merge_sort(ray[:middle]), merge_sort(ray[middle:]))
+
+
+print merge_sort(unsorted)
+print merge_sort([])
+print merge_sort([1])
+print merge_sort([2, 1])
+print merge_sort([1, 2, 3])
+print merge_sort([4, 1, 2, 3])
+print merge_sort([-1, -2, 0, 4, 1, 2, 3])
+print merge_sort([-2, -1, 0])
+
+# merge([1, 3, 5], [2, 4, 6])
+# merge([1, 3, 5], [6])
+# merge([1, 3, 5], [-2, -1, 0])
+# merge([5], [-2, -1, 0])
+# merge([], [2, 4, 6])
+# merge([1, 3, 5], [])
+# merge([], [])
+
+# print_array_recursively("Hello")
 # print selection_sort(unsorted)
-print insertion_sort(unsorted)
-# print insertion_sort([5, 4, 3, 2, 1])
+# print insertion_sort(unsorted)
+# print insertion_sort([1,2,3,6,5])
 # print insertion_sort([-1, -2, 0, 5, 0])
 
 # print linear_search(unsorted, 22)
