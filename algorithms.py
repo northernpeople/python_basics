@@ -82,7 +82,7 @@ def merge(r1, r2):
     while r2_index < len(r2):
         r3.append(r2[r2_index])
         r2_index += 1
-    # print "merged", r3
+    print "merged", r3
     return r3
 
 
@@ -95,14 +95,54 @@ def merge_sort(ray):
         return merge(merge_sort(ray[:middle]), merge_sort(ray[middle:]))
 
 
-print merge_sort(unsorted)
-print merge_sort([])
-print merge_sort([1])
-print merge_sort([2, 1])
-print merge_sort([1, 2, 3])
-print merge_sort([4, 1, 2, 3])
-print merge_sort([-1, -2, 0, 4, 1, 2, 3])
-print merge_sort([-2, -1, 0])
+def partition(ray, left, right):
+    if left >= right:
+        return -1
+    print "\n****** partitioning ***"
+    print "*** ", ray
+    pivot_value = ray[(right - left) // 2]
+    print "*** pivot index, value", (right // 2), pivot_value
+    while left < right:
+        while ray[left] < pivot_value and left < right:
+            left += 1
+        while ray[right] >= pivot_value and left < right:
+            right -= 1
+
+        print "**** swapping indexes ", left, right
+        ray[left], ray[right] = ray[right], ray[left]
+        print "***  after swap", ray
+    print "*** partitioned index", right
+    print "****** paritioning done ***\n"
+    return right
+# all of the numbers at or to the right of this index are eqaul to or larger then pivot
+
+
+def quick_sort(ray, left, right):
+    if left >= right:
+        return
+    print "ray, left, right", ray, left, right
+
+    partitioning = partition(ray, left, right)
+
+    print "calling left"
+    quick_sort(ray, 0, partitioning-1)
+    print "calling right"
+    quick_sort(ray, partitioning, right)
+
+
+ray = [3,2,13,3]
+# ray = unsorted
+
+# print partition(ray, 0, len(ray)-1)
+# quick_sort(ray, 0, len(ray)-1)
+# print "\n__done", ray
+# print merge_sort([])
+# print merge_sort([1])
+# print merge_sort([2, 1])
+# print merge_sort([1, 2, 3])
+# print merge_sort([4, 1, 2, 3])
+# print merge_sort([-1, -2, 0, 4, 1, 2, 3])
+# print merge_sort([-2, -1, 0])
 
 # merge([1, 3, 5], [2, 4, 6])
 # merge([1, 3, 5], [6])
@@ -154,3 +194,4 @@ print merge_sort([-2, -1, 0])
 # print binary_search([-5, -3, -1, 1, 2, 4, 7], 3)
 # print binary_search([-5, -3, -1, 1, 2, 4, 7], 4)
 # print binary_search([], -4)
+
